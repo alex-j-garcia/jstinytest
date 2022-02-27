@@ -81,7 +81,7 @@ const TinyTest = {
         }
     },
 
-    assertDeepEquals = (expected, actual) => {
+    assertDeepEquals: function(expected, actual) {
         if (actual === expected) {
           return true;
         } else if (typeof actual != typeof expected) {
