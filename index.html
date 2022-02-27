@@ -32,6 +32,34 @@
           assert(a != b, "didn't match");
         },
 
+        "testing assertDeepEquals 1": () => {
+          let a = {};
+          let b = {};
+
+          TinyTest.assertDeepEquals(a, b);
+        },
+
+        // "testing assertDeepEquals 2": () => {
+        //   let a = {};
+        //   let b = {a: 1, b: 2};
+
+        //   deepEq(a, b);
+        // },
+
+        "testing assertDeepEquals 3": () => {
+          let a = { a: 1, b:2 };
+          let b = { a: 1, b:2 };
+
+          TinyTest.assertDeepEquals(a, b);
+        },
+
+        "testing assertDeepEquals 4": () => {
+          let a = { a: 1, b: ['a', 'b'], c: 3 };
+          let b = { a: 1, b: ['a', 'b'], c: 3 };
+
+          TinyTest.assertDeepEquals(a, b);
+        },
+
       });
     </script>
   </body>

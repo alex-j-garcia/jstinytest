@@ -48,7 +48,7 @@ const TinyTest = {
                 console.log('Test:', testName, 'OK');
             } catch (e) {
                 failures++;
-                console.error('Test:', testName, 'FAILED', e);
+                console.error('Test:', testName, 'FAILED', e.message);
                 console.error(e.stack);
             }
         }
@@ -84,24 +84,22 @@ const TinyTest = {
     assertDeepEquals: function(expected, actual) {
         if (actual === expected) {
           return true;
-        } else if (typeof actual != typeof expected) {
-          return false;
-        } else if (actual === null || expected === null) {
-          return false;
-        } else if (typeof actual != "object" || typeof expected != "object") {
-          return false;
-        } else if (Object.getPrototypeOf(actual) != Object.getPrototypeOf(expected)) {
-          return false;
+        } else if (
+          (typeof actual != typeof expected)
+          || (actual === null || expected === null)
+          || (typeof actual != "object" || typeof expected != "object")
+          || (Object.getPrototypeOf(actual) != Object.getPrototypeOf(expected))
+        ) {
+          throw new Error('assertDeepEquals() "' + expected + '" != "' + actual + '"');
         }
-      
-        let keys1 = Object.keys(actual), keys2 = Object.keys(expected);
-        if (keys1.length !== keys2.length) return false;
-      
-        for (let key of keys1) {
-          if (!test.assertDeepEquals(actual[key], expected[key])) {
-              throw new Error('assertDeepEquals() "' + expected + '" != "' + actual + '"');
-          }
+
+        let keys1 = Object.keys(expected), keys2 = Object.keys(actual);
+        if (keys1.length !== keys2.length) {
+            throw new Error('assertDeepEquals() keys don\'t match: "[' + keys1 + ']" != "[' + keys2 + ']"');
         }
+
+        for (let key of keys1) this.assertDeepEquals(expected[key], actual[key]);
+
         return true;
     },
 
