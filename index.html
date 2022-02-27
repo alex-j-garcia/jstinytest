@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>TinyTest</title>
+  </head>
+
+  <body>
+    <script src="tinytest.js"></script>
+    <script src="adder.js"></script>
+    <script>
+      tests({
+        "adds two numbers": () => {
+          eq(4, add(2, 2));
+        },
+
+        "adds negative numbers": () => {
+          eq(-2, add(2, -4));
+        },
+
+        // "fail on purpose": () => {
+        //   fail("Testing failures");
+        // }
+
+        "testing assert": () => {
+          let a = {};
+          let b = {};
+
+          assert(a != b, "didn't match");
+        },
+
+      });
+    </script>
+  </body>
+</html>

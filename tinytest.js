@@ -81,6 +81,30 @@ const TinyTest = {
         }
     },
 
+    assertDeepEquals = (expected, actual) => {
+        if (actual === expected) {
+          return true;
+        } else if (typeof actual != typeof expected) {
+          return false;
+        } else if (actual === null || expected === null) {
+          return false;
+        } else if (typeof actual != "object" || typeof expected != "object") {
+          return false;
+        } else if (Object.getPrototypeOf(actual) != Object.getPrototypeOf(expected)) {
+          return false;
+        }
+      
+        let keys1 = Object.keys(actual), keys2 = Object.keys(expected);
+        if (keys1.length !== keys2.length) return false;
+      
+        for (let key of keys1) {
+          if (!test.assertDeepEquals(actual[key], expected[key])) {
+              throw new Error('assertDeepEquals() "' + expected + '" != "' + actual + '"');
+          }
+        }
+        return true;
+    },
+
 };
 
 const fail                = TinyTest.fail,
@@ -88,4 +112,5 @@ const fail                = TinyTest.fail,
       assertEquals        = TinyTest.assertEquals,
       eq                  = TinyTest.assertEquals, // alias for assertEquals
       assertStrictEquals  = TinyTest.assertStrictEquals,
-      tests               = TinyTest.run;
+      tests               = TinyTest.run,
+      deepEq              = TinyTest.assertDeepEquals;
